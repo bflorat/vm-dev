@@ -1,0 +1,44 @@
+# vm-dev
+A Virtual Machine for fullstack development.
+
+TIP: This Vagrant configuration comes with a set of Open Source predefined tools for a typical fullstack stack including Java/Spring on the backend side and ECMAScript on the frontend side.
+
+Includes:
+
+- IDEs: Intellij IDEA Community Edition, VSCode, VIM, Geany
+- VCS: git
+- Integration : Docker CE, K3S (Kubernetes), k9s
+- Testing tools : Bruno
+- Performance tools: JVisualVM, MAT, JMeter
+- Database tools : DBeaver, Pgbadger
+- VM : Guest addons
+
+
+## Prerequisites
+
+### To build a virtual box VM
+* https://developer.hashicorp.com/vagrant/install?product_intent=vagrant[Install] a recent vagrant distribution.
+
+### To run the VM
+
+* A Linux / Windows/ Mac OS machine with 16 GB+ RAM (for actual fullstack autonomous development, target 32 GiB+)
+* A recent (7+) https://www.virtualbox.org/wiki/Downloads[Virtualbox installation] with associated extension pack. Note that you don't have to install VirtualBox guest additions into the VM, it is already done in the Vagrant image.
+
+
+TIP: Prefer light hosts and stop a maximum of host programs to save memory for your VM. I prefer a XFCE-based Debian host.
+
+TIP: For corporate development and especially if the VM is not stored on an encrypted disk (like a FDE disk), we strongly recommend to encrypt the virtual disks.
+
+## How to build an image ?
+
+* Search  for `[CUSTOM]` comments, they indicate good place to customize the VM.
+* This image is primary preset for a french-bases locale, you can change this in the Vagrant file.
+
+## Customization by the end user of the image
+
+* Customize and launch as `vagrant` the `post-install-as-user.sh` script.
+* Change the `vagrant` password.
+
+## Troubleshooting
+
+TIP: Check performances logs in `/var/log/atop`
