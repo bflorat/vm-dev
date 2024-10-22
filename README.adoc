@@ -26,6 +26,7 @@ WARNING: As of October 2024, Vagrant does not yet support VirtualBox 7.1. Use VB
 
 * A Linux / Windows / Mac OS machine with 16 GB+ RAM (for actual fullstack autonomous development, aim for 32 GiB+).
 * A recent (7+) https://www.virtualbox.org/wiki/Downloads[VirtualBox installation] with the associated extension pack. Note that you don't have to install VirtualBox guest additions into the VM, as they are already included in the Vagrant image.
+* A USB 3.2 (5 in Gen 1 to 20 Gbps in Gen 2x2) port if you plan to run the VM on an USB NVMe disk (SATA III speed is 6 Gbps in comparison).
 
 TIP: The Oracle Extension Pack is not required to build or run this VM unless you plan to encrypt the virtual disks.
 

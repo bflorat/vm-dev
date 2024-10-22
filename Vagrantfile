@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.gui = true
     vb.name = "VM_DEV"
-    vb.memory = "16000" # Adjust memory allocation as needed
+    vb.memory = "26000" # Adjust memory allocation as needed
     vb.cpus = 4 # Adjust CPU allocation as needed
     vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
     vb.customize ["modifyvm", :id, "--mouse", "usbtablet"]
