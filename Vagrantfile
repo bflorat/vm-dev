@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.gui = true
     vb.name = "VM_DEV"
-    vb.memory = "26000" # Adjust memory allocation as needed
+    vb.memory = "16000" # Adjust memory allocation as needed
     vb.cpus = 4 # Adjust CPU allocation as needed
     vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
     vb.customize ["modifyvm", :id, "--mouse", "usbtablet"]
@@ -96,13 +96,12 @@ Vagrant.configure("2") do |config|
 
     # Maven
     apt-get install -y maven
-    chown -R vagrant:vagrant /home/vagrant/.m2
     mvn -v
 
     # NPM
-    apt install -y curl gnupg2 ca-certificates lsb-release
-    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-    apt install -y nodejs
+    apt-get install -y curl gnupg2 ca-certificates lsb-release
+    curl -fsSL 'https://deb.nodesource.com/setup_20.x' | sudo -E bash -
+    apt-get install -y nodejs
     npm -v
 
     # [CUSTOM] Add here hosted entries (prefer DNS)
@@ -126,32 +125,33 @@ Storage=volatile" >> /etc/systemd/journald.conf
     apt-get install -y vim htop iotop lsof unzip locate rsync screen dnsutils tree secure-delete procinfo \
          net-tools parted powerline etckeeper jq curl wget multitail bc patch httpie xmlstarlet systemd-timesyncd \
          xdg-utils bash-completion iotop hdparm haveged linux-perf p7zip-full uuid pwgen cloc flameshot \
-         graphviz thunar p7zip-full file-roller firefox
+         graphviz thunar p7zip-full file-roller firefox-esr
 
     # Bruno
-    curl --retry 5 -k https://github.com/usebruno/bruno/releases/download/v1.33.1/bruno_1.33.1_amd64_linux.deb -o /var/tmp/bruno.deb
+    apt-get install -y libxss1
+    curl -L 'https://github.com/usebruno/bruno/releases/download/v1.33.1/bruno_1.33.1_amd64_linux.deb' -o /var/tmp/bruno.deb
     dpkg -i /var/tmp/bruno.deb
     rm /var/tmp/bruno.deb
 
     # JVisualVM
-    curl -L https://github.com/oracle/visualvm/releases/download/2.1.10/visualvm_2110.zip -o /tmp/visualvm.zip
+    curl -L 'https://github.com/oracle/visualvm/releases/download/2.1.10/visualvm_2110.zip' -o /tmp/visualvm.zip
     unzip /tmp/visualvm.zip -d /opt/
-    ln -s /opt/visualvm_218 /opt/visualvm
+    ln -s /opt/visualvm_2110 /opt/visualvm
 
     # MAT (Memory Analyzer)
-    curl -L https://www.eclipse.org/downloads/download.php?file=/mat/1.15.0/rcp/MemoryAnalyzer-1.15.0.20231206-linux.gtk.x86_64.zip -o /tmp/mat.zip
+    curl -L 'https://mirror.ibcp.fr/pub/eclipse/mat/1.15.0/rcp/MemoryAnalyzer-1.15.0.20231206-linux.gtk.x86_64.zip' -o /tmp/mat.zip
     unzip /tmp/mat.zip -d /opt/   
     cp /var/tmp/MemoryAnalyzer.ini /opt/mat/ 
     
     # JMeter
-    curl -L https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz -o /var/tmp/jmeter.tar.gz
-    tar xzpvf /var/tmp/jmeter.tar.xz -C /opt
+    curl -L 'https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz' -o /var/tmp/jmeter.tar.gz
+    tar xzpvf /var/tmp/jmeter.tar.gz -C /opt
 
     # pgbadger (postgresql performance analysis)
-    apt install pgbadger
+    apt-get install -y pgbadger
 
     # Intellij IDEA CE
-    curl --retry 5 -k https://forge.diplomatie.gouv.fr/artifactory/outilstiers-rece/idea/ideaIC-2024.1.1.tar.gz -o /var/tmp/idea.tar.gz
+    curl -L 'https://download.jetbrains.com/idea/ideaIU-2024.2.3.tar.gz' -o /var/tmp/idea.tar.gz
     rm -rf /opt/idea-IC* 2>/dev/null | true
     tar xzpvf /var/tmp/idea.tar.gz -C /opt
     ln -s /opt/idea/bin/idea.sh /usr/local/bin/idea
@@ -168,16 +168,16 @@ Terminal=false
 EoF
  
     # DBeaver 
-    curl -k https://objects.githubusercontent.com/github-production-release-asset-2e65be/44662669/9b1ef38f-7666-4b6f-bc59-3e6f366d9c42?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240513%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240513T164342Z&X-Amz-Expires=300&X-Amz-Signature=e9df93c4f5ddff14fec34b1e25c2fe713ad10831adbed4441552a407ee5e302f&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=44662669&response-content-disposition=attachment%3B%20filename%3Ddbeaver-ce_24.0.4_amd64.deb&response-content-type=application%2Foctet-stream -o /var/tmp/dbeaver.deb
+    curl -L 'https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb' -o /var/tmp/dbeaver.deb
     dpkg -i /var/tmp/dbeaver.deb
     rm /var/tmp/dbeaver.deb
 
     # VSCode
-    curl -k https://vscode.download.prss.microsoft.com/dbazure/download/stable/dc96b837cf6bb4af9cd736aa3af08cf8279f7685/code_1.89.1-1715060508_amd64.deb -o /var/tmp/code.deb
+    curl -L 'https://vscode.download.prss.microsoft.com/dbazure/download/stable/dc96b837cf6bb4af9cd736aa3af08cf8279f7685/code_1.89.1-1715060508_amd64.deb' -o /var/tmp/code.deb
     dpkg -i /var/tmp/code.deb
     rm /var/tmp/code.deb
     
-    # Start guest addons
+    # Start guest addons at startup
     mkdir -p ~vagrant/.config/autostart
     chown -R vagrant:vagrant ~vagrant/.config
 
@@ -193,15 +193,10 @@ Comment=Start VBoxClient
 EoF
 
     # K3S (local Kubernetes)
-    K3S_AIRGAP_IMAGES_DIR="/var/lib/rancher/k3s/agent/images"
-    mkdir -p $K3S_AIRGAP_IMAGES_DIR
-    curl -k https://github.com/k3s-io/k3s/releases/download/v1.29.4%2Bk3s1/k3s-airgap-images-amd64.tar.zst -o $K3S_AIRGAP_IMAGES_DIR/k3s-airgap-images-amd64.tar.zst
-    zstd -f -d $K3S_AIRGAP_IMAGES_DIR/*.zst && rm -f $K3S_AIRGAP_IMAGES_DIR/*.zst
-    curl -sfL https://get.k3s.io | \
-    | INSTALL_K3S_SKIP_DOWNLOAD=true INSTALL_K3S_EXEC="server --write-kubeconfig-mode 0644" sh -
+    curl -sfL 'https://get.k3s.io' | INSTALL_K3S_EXEC="server --write-kubeconfig-mode 0644" sh -
     
-    # k9s
-    curl -k https://github.com/derailed/k9s/releases/download/v0.32.4/k9s_linux_amd64.deb -o /var/tmp/k9s.deb
+    # K9S
+    curl -L 'https://github.com/derailed/k9s/releases/download/v0.32.4/k9s_linux_amd64.deb' -o /var/tmp/k9s.deb
     dpkg -i /var/tmp/k9s.deb
     rm /var/tmp/k9s.deb
     chown -R vagrant:vagrant ~vagrant/.config/k9s
@@ -214,19 +209,19 @@ EoF
     # Log VM version
     date +%Y%m%d-%H%M | tee /etc/VERSION_VM_DEV
 
-    # [CUSTOM] Disable swapping to avoid freezes. Don't do this for low memory VMs.
+    # [CUSTOM] Disable swapping to avoid freezes. Remove this for VMs < 32 GiB.
     swapoff -a
     sed -i.bak '/swap/d' /etc/fstab
     rm -f /swapfile
 
-    # Disable Gnome indexation (use a lot of IO)
-    # We replace nautilus by Thunar as file manager as we didn't find a way to disable tracker-indexing while keeping Nautilus.
-    apt remove -y tracker tracker-extract tracker-miner-fs
+    # Disable Gnome indexation (uses a lot of IO)
+    # We replace Nautilus by Thunar as file manager as we didn't find a way to disable tracker-indexing while keeping Nautilus.
+    apt-get remove -y tracker tracker-extract tracker-miner-fs
 
     # Cleanup
-    apt update && apt upgrade -y && apt full-upgrade -y && apt autoremove -y --purge && apt-get autoclean
+    apt-get update && apt-get upgrade -y && apt-get full-upgrade -y && apt-get autoremove -y --purge && apt-get autoclean
 
-    # The end
+    # We're done
     reboot
     
   SHELL

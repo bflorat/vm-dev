@@ -1,5 +1,5 @@
 #!/bin/bash
-# Customisations (alias..) du bashrc
+# Bash customization
 
 # POWERLINE
 if [ -f `which powerline-daemon` ]; then
@@ -16,7 +16,6 @@ export PATH=.:/opt/visualvm/bin:/opt/mat:$PATH
 
 alias jmeter='export JVM_ARGS="-Xmx3g" && /opt/apache-jmeter/bin/jmeter'
 
-# Meilleure affichage des fichiers
 alias l='ls -altr'
 
 source <(kubectl completion bash)

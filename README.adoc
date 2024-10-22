@@ -1,44 +1,54 @@
-# vm-dev
-A Virtual Machine for fullstack development.
+= vm-dev
+A Virtual Machine for fullstack development. 
 
-TIP: This Vagrant configuration comes with a set of Open Source predefined tools for a typical fullstack stack including Java/Spring on the backend side and ECMAScript on the frontend side.
+This Vagrant configuration comes with a set of open-source predefined tools for a typical fullstack stack, including Java/Spring on the backend and ECMAScript on the frontend.
 
-Includes:
+To allow incremental validation before upgrading and avoiding tools regressions or unexpected incompatibilities, we use version-pinned packages when possible.
 
-- IDEs: Intellij IDEA Community Edition, VSCode, VIM, Geany
-- VCS: git
-- Integration : Docker CE, K3S (Kubernetes), k9s
-- Testing tools : Bruno
-- Performance tools: JVisualVM, MAT, JMeter
-- Database tools : DBeaver, Pgbadger
-- VM : Guest addons
+It includes:
 
+- **IDEs**: IntelliJ IDEA Community Edition, VSCode, VIM, Geany
+- **VCS**: Git
+- **Integration**: Docker CE, K3S (Kubernetes), k9s
+- **Testing tools**: Bruno
+- **Performance tools**: JVisualVM, MAT, JMeter
+- **Database tools**: DBeaver, Pgbadger
+- **VM**: Guest Additions
 
-## Prerequisites
+== Prerequisites
 
-### To build a virtual box VM
-* https://developer.hashicorp.com/vagrant/install?product_intent=vagrant[Install] a recent vagrant distribution.
+=== To build a VirtualBox VM
+* https://developer.hashicorp.com/vagrant/install?product_intent=vagrant[Install] a recent Vagrant distribution.
 
-### To run the VM
+WARNING: As of October 2024, Vagrant does not yet support VirtualBox 7.1. Use VB 7 from https://www.virtualbox.org/wiki/Download_Old_Builds_7_0[here].
 
-* A Linux / Windows/ Mac OS machine with 16 GB+ RAM (for actual fullstack autonomous development, target 32 GiB+)
-* A recent (7+) https://www.virtualbox.org/wiki/Downloads[Virtualbox installation] with associated extension pack. Note that you don't have to install VirtualBox guest additions into the VM, it is already done in the Vagrant image.
+=== To run the VM
 
+* A Linux / Windows / Mac OS machine with 16 GB+ RAM (for actual fullstack autonomous development, aim for 32 GiB+).
+* A recent (7+) https://www.virtualbox.org/wiki/Downloads[VirtualBox installation] with the associated extension pack. Note that you don't have to install VirtualBox guest additions into the VM, as they are already included in the Vagrant image.
 
-TIP: Prefer light hosts and stop a maximum of host programs to save memory for your VM. I prefer a XFCE-based Debian host.
+TIP: The Oracle Extension Pack is not required to build or run this VM unless you plan to encrypt the virtual disks.
 
-TIP: For corporate development and especially if the VM is not stored on an encrypted disk (like a FDE disk), we strongly recommend to encrypt the virtual disks.
+TIP: Prefer lightweight hosts and stop as many host programs as possible to free memory for your VM. I recommend using an XFCE-based Debian host.
 
-## How to build an image ?
+TIP: For corporate development, especially if the VM is not stored on an encrypted disk (such as a full disk encryption (FDE) disk), we strongly recommend encrypting the virtual disks.
 
-* Search  for `[CUSTOM]` comments, they indicate good place to customize the VM.
-* This image is primary preset for a french-bases locale, you can change this in the Vagrant file.
+== How to build an image?
 
-## Customization by the end user of the image
+* Search for `[CUSTOM]` comments; they indicate places to customize or extend this VM.
+* This image is primarily preset for a French-based locale, which you can change in the Vagrant file.
 
-* Customize and launch as `vagrant` the `post-install-as-user.sh` script.
+== Customization by the end user of the image
+
+* Customize and launch the `post-install-as-user.sh` script as the `vagrant` user.
 * Change the `vagrant` password.
 
-## Troubleshooting
 
-TIP: Check performances logs in `/var/log/atop`
+== Use the VM
+
+* Connect with `vagrant`/`vagrant` (change the password). `Vagrant` is a sudoer.
+* Prefer shutting down from the VM. Shutting down directly from the VirtualBox menu is like a power failure and can corrupt the filesystem.
+
+== Troubleshooting
+
+TIP: Check performance logs in `/var/log/atop`.
