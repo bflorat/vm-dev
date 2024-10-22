@@ -3,7 +3,7 @@ A Virtual Machine for fullstack development.
 
 This Vagrant configuration comes with a set of open-source predefined tools for a typical fullstack stack, including Java/Spring on the backend and ECMAScript on the frontend.
 
-To allow incremental validation before upgrading and avoiding tools regressions or unexpected incompatibilities, we use version-pinned packages when possible.
+To allow incremental validation before upgrading and to avoid tool regressions or unexpected incompatibilities, we use version-pinned packages when possible.
 
 It includes:
 
@@ -40,14 +40,24 @@ TIP: For corporate development, especially if the VM is not stored on an encrypt
 
 == Customization by the end user of the image
 
-* Customize and launch the `post-install-as-user.sh` script as the `vagrant` user.
+* In VB VM settings, we advise these changes (cannot be set by Vagrant):
+** General / Basic: Set Base memory as high as you can. I set 26 GiB for a 32 GiB machine.
+** General / Basic: Set as many VCPUs as possible. It is restricted by the number of physical cores, not threads, so for instance, on my quad-core / 8 CPU machine, I set 4.
+** General / Advanced: Enable 'Drag and Drop'.
+** General / Disk Encryption: Enable for corporate development or if the VM is not already on an encrypted filesystem. Requires Oracle Extension Pack.
+** Storage: Use 'virtio-SCSI' for the SATA controller (faster than AHCI) and enable 'Use Host I/O Cache'. Enable 'Solid-state drive' on the virtual disk if it is hosted on a physical SSD.
+
+TIP: Do not enable System / 'Nested Vt-x/AMD-V' unless you plan to run a virtual machine inside your VM.
+
 * Change the `vagrant` password.
 
+* Customize and launch the `/usr/local/bin/post-install-as-user.sh` script as the `vagrant` user.
 
 == Use the VM
 
 * Connect with `vagrant`/`vagrant` (change the password). `Vagrant` is a sudoer.
 * Prefer shutting down from the VM. Shutting down directly from the VirtualBox menu is like a power failure and can corrupt the filesystem.
+* A shared folder is created by default (`/var/tmp` on the host, `/share` in the VM). Change this if your host is not a Linux distribution.
 
 == Troubleshooting
 

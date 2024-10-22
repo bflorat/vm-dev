@@ -56,9 +56,10 @@ WORKSPACES="$HOME/workspaces"
 URL_GIT="https://github/acme/foo"
 
 # All repositories
-DEPOTS_PROJET=(
+PROJECT_REPOS=(
 https://$URL_GIT/module_a.git \
 https://$URL_GIT/module_b.git
+)
 
 # Backup potential previous workspaces
 if [[ "$NO_CLONE" == false ]]; then
@@ -93,6 +94,17 @@ password=$git_password
 EOF
   git config --global credential.helper store
   echo "[INFO] Git credentials saved."
+fi
+
+# Clone all repositories
+if [[ "$NO_CLONE" == false ]]; then
+  cd $WORKSPACES/$MY_PROJECT
+  for repo in "${PROJECT_REPOS[@]}"; do
+      (
+          echo "[INFO] Clone *${repo}*"
+          git clone $repo
+      )
+  done
 fi
 
 # Create default shortcuts
