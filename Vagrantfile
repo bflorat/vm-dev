@@ -151,7 +151,7 @@ Storage=volatile" >> /etc/systemd/journald.conf
     apt-get install -y pgbadger
 
     # Intellij IDEA CE
-    curl -L 'https://download.jetbrains.com/idea/ideaIC-2024.2.4-aarch64.tar.gz' -o /var/tmp/idea.tar.gz
+    curl -L 'https://download.jetbrains.com/idea/ideaIC-2024.2.4.tar.gz' -o /var/tmp/idea.tar.gz
     rm -rf /opt/idea-IC* 2>/dev/null | true
     tar xzpvf /var/tmp/idea.tar.gz -C /opt
     IDEA_VERSION=$(ls /opt/ | grep idea)
@@ -161,7 +161,7 @@ Version=1.0
 Type=Application
 Name=IntelliJ IDEA Community Edition
 Icon=/opt/$IDEA_VERSION/bin/idea.png
-Exec="/opt/$IDEA_VERSION/bin/idea.sh" %f
+Exec="/opt/$IDEA_VERSION/bin/idea" %f
 Categories=Development;IDE;
 Terminal=false
 EoF
